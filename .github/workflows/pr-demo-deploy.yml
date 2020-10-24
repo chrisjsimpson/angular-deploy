@@ -4,9 +4,7 @@
 # The deployed url will be <branchname>.<domain>
 
 name: Deploy branch
-on:
-  push:
-    branch
+on: push
 jobs:
   ensure-dokku-app-exists:
     runs-on: ubuntu-20.04
