@@ -1,0 +1,19 @@
+---
+# When a push is made to a branch, deploy an instance of the app using
+# that branch. 
+# The deployed url will be <branchname>.<domain>
+
+name: Deploy branch
+on:
+  push:
+    branch
+jobs:
+  ensure-dokku-app-exists:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Create dokku app for branch if dosent already exist
+        run: |
+          mkdir -p ~/.ssh
+          eval `ssh-agent -s`
+          ssh-add - <<< "$SSH_PRIVATE_KEY"
+          ssh-keyscan $DOKKU_HOST >> ~/.ssh/known_hosts
