@@ -12,6 +12,7 @@ jobs:
       - name: Create dokku app for branch if dosent already exist
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          DOKKU_HOST: ${{ secrets.DOKKU_HOST }}
         run: |
           mkdir -p ~/.ssh
           eval `ssh-agent -s`
