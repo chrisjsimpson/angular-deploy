@@ -6,10 +6,10 @@
 name: Deploy branch
 on: push
 jobs:
-  ensure-dokku-app-exists:
+  deploy-pr:
     runs-on: ubuntu-20.04
     steps:
-      - name: Create dokku app for branch if dosent already exist
+      - name: Prepare runner with ssh keys
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           DOKKU_HOST: ${{ secrets.DOKKU_HOST }}
@@ -18,3 +18,9 @@ jobs:
           eval `ssh-agent -s`
           ssh-add - <<< "$SSH_PRIVATE_KEY"
           ssh-keyscan $DOKKU_HOST >> ~/.ssh/known_hosts
+      - name: Create dokku app for branch if dosent already exist 
+        env:
+          DOKKU_HOST: ${{ secrets.DOKKU_HOST }}
+        run: |
+          echo Creating dokku app
+          ssh dokku@$DOKKU_HOST -C "dokku apps:clone angular-deploy angular-deploy-staging"
