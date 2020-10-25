@@ -21,7 +21,7 @@ jobs:
           eval `ssh-agent -s`
           ssh-add - <<< "$SSH_PRIVATE_KEY"
           ssh-keyscan $DOKKU_HOST >> ~/.ssh/known_hosts
-      - name: Create dokku app for branch if dosent already exist 
+      - name: Create dokku app for branch if dosent already exist using dokku apps:clone
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           DOKKU_HOST: ${{ secrets.DOKKU_HOST }}
@@ -33,3 +33,13 @@ jobs:
           echo Creating dokku app ${{ github.actor }}-${{ github.head_ref }}
           echo The url will be ${{ github.actor }}-${{ github.head_ref }}.pcpink.co.uk
           ssh dokku@$DOKKU_HOST -C "dokku apps:clone --ignore-existing angular-deploy ${{ github.actor }}-${{ github.head_ref }}"
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Deploy branch ${{ github.head_ref }} to dokku
+        uses: idoberko2/dokku-deploy-github-action@v1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          dokku-host: ${{ secrets.DOKKU_HOST }}
+          app-name: ${{ github.actor }}-${{ github.head_ref }}
+          remote-branch: ${{ github.head_ref }}
