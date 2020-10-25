@@ -17,6 +17,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           DOKKU_HOST: ${{ secrets.DOKKU_HOST }}
         run: |
+          set -x
           mkdir -p ~/.ssh
           eval `ssh-agent -s`
           ssh-add - <<< "$SSH_PRIVATE_KEY"
@@ -27,6 +28,7 @@ jobs:
           DOKKU_HOST: ${{ secrets.DOKKU_HOST }}
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: |
+          set -x
           echo $GITHUB_CONTEXT
           eval `ssh-agent -s`
           ssh-add - <<< "$SSH_PRIVATE_KEY"
