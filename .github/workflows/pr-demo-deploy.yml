@@ -5,7 +5,6 @@
 
 name: Deploy branch
 on: 
-  - push
   - pull_request
   # (pull_request_target get fired on external contributer pull requests)
   # - pull_request_target
