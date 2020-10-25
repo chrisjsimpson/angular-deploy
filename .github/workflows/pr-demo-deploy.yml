@@ -33,6 +33,7 @@ jobs:
           echo Creating dokku app ${{ github.actor }}-${{ github.head_ref }}
           echo The url will be ${{ github.actor }}-${{ github.head_ref }}.pcpink.co.uk
           ssh dokku@$DOKKU_HOST -C "dokku apps:clone --ignore-existing angular-deploy ${{ github.actor }}-${{ github.head_ref }}"
+          ssh dokku@$DOKKU_HOST -C "dokku git:set ${{ github.actor }}-${{ github.head_ref }} deploy-branch ${{ github.head_ref }}"
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -42,4 +43,4 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           dokku-host: ${{ secrets.DOKKU_HOST }}
           app-name: ${{ github.actor }}-${{ github.head_ref }}
-          remote-branch: ${{ github.head_ref }}
+          #remote-branch: ${{ github.head_ref }}
