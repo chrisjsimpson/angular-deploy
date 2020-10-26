@@ -45,4 +45,5 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           dokku-host: ${{ secrets.DOKKU_HOST }}
           app-name: ${{ github.actor }}-${{ github.head_ref }}
+          git-push-flags: '--force'
           remote-branch: ${{ github.head_ref }}
