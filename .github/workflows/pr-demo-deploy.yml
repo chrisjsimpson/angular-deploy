@@ -53,3 +53,9 @@ jobs:
           app-name: ${{ github.event.pull_request.user.login }}-${{ github.head_ref }}
           git-push-flags: '--force'
           remote-branch: ${{ github.head_ref }}
+      - name: Click to see your PR web address
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          DOKKU_HOST: ${{ secrets.DOKKU_HOST }}
+        run: |
+          echo ${{ github.event.pull_request.user.login }}-${{ github.head_ref }}.pcpink.co.uk
