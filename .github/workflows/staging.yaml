@@ -1,6 +1,9 @@
 ---
 name: Deploy to dokku staging
-on: push
+on:
+  push:
+    branches:
+      - staging
 jobs:
   deploy-staging:
     runs-on: ubuntu-20.04
